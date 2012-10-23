@@ -1,0 +1,15 @@
+{
+    "require": {
+        "twig/twig": "1.*",
+        "doctrine/orm": "2.3.*",
+        "symfony/form": "2.1.*",
+        "symfony/validator": "2.1.*",
+        "symfony/yaml": "2.1.*",
+        "symfony/config": "2.1.*",
+        "symfony/translation": "2.1.*",
+        "symfony/twig-bridge": "2.1.*",
+        "symfony/http-foundation": "2.1.*",
+        "symfony/http-kernel": "2.1.*",
+        "symfony/class-loader": "2.1.*"
+    }
+}
