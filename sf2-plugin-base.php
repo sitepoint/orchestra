@@ -51,10 +51,10 @@ $sf2PluginBaseClassLoader->registerNamespaces(array(
     'Symfony\\Component\\Config' => __DIR__.'/vendor/symfony/config/',
     'Symfony\\Component\\ClassLoader' => __DIR__.'/vendor/symfony/class-loader/',
     'Symfony\\Bridge\\Twig' => __DIR__.'/vendor/symfony/twig-bridge/',
-    'SitePoint' => __DIR__ . '/src/',
     'SessionHandlerInterface' => __DIR__.'/vendor/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs',
     'Doctrine\\ORM' => __DIR__.'/vendor/doctrine/orm/lib/',
     'Doctrine\\DBAL' => __DIR__.'/vendor/doctrine/dbal/lib/',
     'Doctrine\\Common' => __DIR__.'/vendor/doctrine/common/lib/',
+    'SitePoint' => __DIR__ . '/src/',
 ));
 $sf2PluginBaseClassLoader->register();
