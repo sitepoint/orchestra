@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright 2012 Michael Sauter <michael.sauter@sitepoint.com>
+ * Copyright 2012 Michael Sauter <mail@michaelsauter.net>
+ * Sf2PluginBase is a TripleTime project of SitePoint.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -26,7 +27,7 @@ if (!isset($sf2PluginBaseConfig)) {
 // Create an annotation configuration, using the configured environment
 // Tell Doctrine how to autoload the Assert annotations
 AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", __DIR__.'/../vendor/symfony/validator');
-$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($paths, ($sf2PluginBaseConfig['env'] == 'dev'), null, null, false);
+$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($entityPaths, ($sf2PluginBaseConfig['env'] == 'dev'), null, null, false);
 
 // Create an entity manager using the configured DB params and the configuration created above
 $em = \Doctrine\ORM\EntityManager::create($sf2PluginBaseConfig['database'], $config);

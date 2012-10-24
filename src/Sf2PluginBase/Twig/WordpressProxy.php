@@ -1,6 +1,7 @@
 <?php
 /**
- * Copyright 2012 Michael Sauter <michael.sauter@sitepoint.com>
+ * Copyright 2012 Michael Sauter <mail@michaelsauter.net>
+ * Sf2PluginBase is a TripleTime project of SitePoint.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
