@@ -58,6 +58,11 @@ up your database before you enter any command. Make sure never to call `orm:sche
 same table as Wordpress, otherwise all Wordpress tables will be erased. If you want to create the tables for your
 entities, use `orm:schema-tool:update`.
 
+= What Coding Style Guidelines to use? =
+
+I recommend following the [Symfony2 Coding Standards](http://symfony.com/doc/2.0/contributing/code/standards.html)
+instead of the Wordpress Coding Guidelines. Sf2PluginBase itself and the templates use the Symfony2 Coding Standards.
+
 
 == Changelog ==
 
