@@ -185,21 +185,27 @@ class Controller
      *     'controller' => 'ControllerName',
      *     'action' => 'actionName'
      * ));
-     * $this->generatePluginUrl('action');
+     * $this->generatePluginUrl('action', array('other' => 'param');
      *
      * @see Controller::generateUrl()
      * @param array $parameters
      * @return string
      */
-    public function generatePluginUrl($parameters = array())
+    public function generatePluginUrl($controller = array(), $parameters = array())
     {
+        if (is_string($controller)) {
+            $parameters['action'] = $controller;
+        } else {
+            foreach ($controller as $key => $value) {
+                $parameters[$key] = $value;
+            }
+        }
+
         return self::generateUrl($this->request, $parameters);
     }
 
     /**
-     * Generates an URL based on the current URL.
-     * If given $parameters is a string, it is
-     * assumed that it refers to the action
+     * Generates an URL based on the current URL and given $parameters
      *
      * @param $request
      * @param array $parameters
@@ -208,11 +214,6 @@ class Controller
     public static function generateUrl($request, $parameters = array())
     {
         $url = $request->getScheme().'://'.$request->getHost().$request->getBaseUrl();
-
-        if (is_string($parameters)) {
-            $action = $parameters;
-            $parameters = array('action' => $action);
-        }
 
         if (!isset($parameters['page'])) {
             $parameters['page'] = $request->query->get('page');
