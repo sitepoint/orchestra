@@ -55,6 +55,6 @@ $sf2PluginBaseClassLoader->registerNamespaces(array(
     'Doctrine\\ORM' => __DIR__.'/vendor/doctrine/orm/lib/',
     'Doctrine\\DBAL' => __DIR__.'/vendor/doctrine/dbal/lib/',
     'Doctrine\\Common' => __DIR__.'/vendor/doctrine/common/lib/',
-    'SitePoint' => __DIR__ . '/src/',
+    'Sf2PluginBase' => __DIR__ . '/src/',
 ));
 $sf2PluginBaseClassLoader->register();

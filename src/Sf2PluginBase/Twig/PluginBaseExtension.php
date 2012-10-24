@@ -15,9 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-namespace SitePoint\Sf2PluginBase\Twig;
+namespace Sf2PluginBase\Twig;
 
-use SitePoint\Sf2PluginBase\Controller;
+use Sf2PluginBase\Controller;
 
 /**
  * Twig extension for the Sf2PluginBase

@@ -6,13 +6,13 @@ Version: 0.1
 Author: My Name
 */
 
-namespace MyCompany\MyPlugin;
+namespace MyPlugin;
 
 class MyPlugin
 {
     public function __construct()
     {
-        $identifier = \SitePoint\Sf2PluginBase\Framework::setupPlugin(__NAMESPACE__, __DIR__);
+        $identifier = \Sf2PluginBase\Framework::setupPlugin(__NAMESPACE__, __DIR__);
         add_menu_page('My Plugin Options', 'My Plugin', 'manage_options', $identifier, array($this, 'output'));
     }
 
@@ -21,7 +21,7 @@ class MyPlugin
         if (!current_user_can('manage_options')) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
-        echo \SitePoint\Sf2PluginBase\Framework::getResponse();
+        echo \Sf2PluginBase\Framework::getResponse();
     }
 }
 

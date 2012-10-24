@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-namespace SitePoint\Sf2PluginBase;
+namespace Sf2PluginBase;
 
 use Symfony\Component\Validator\Validation;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
@@ -29,8 +29,8 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\HttpFoundation\Request;
-use SitePoint\Sf2PluginBase\Twig\WordpressProxy;
-use SitePoint\Sf2PluginBase\Twig\PluginBaseExtension;
+use Sf2PluginBase\Twig\WordpressProxy;
+use Sf2PluginBase\Twig\PluginBaseExtension;
 
 /**
  * Central class of Sf2PluginBase
@@ -44,7 +44,7 @@ class Framework
     /**
      * Front controller
      *
-     * @var SitePoint\Sf2PluginBase\FrontController
+     * @var Sf2PluginBase\FrontController
      */
     private static $frontController;
 
@@ -103,7 +103,7 @@ class Framework
             }
 
             self::$pluginNamespace = $pluginNamespace;
-            $baseDir = __DIR__.'/../../..';
+            $baseDir = __DIR__.'/../..';
             $vendorDir = $baseDir.'/vendor';
 
             // Boot Doctrine and use the configuration of the active plugin
