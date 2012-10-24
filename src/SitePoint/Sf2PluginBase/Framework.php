@@ -137,7 +137,9 @@ class Framework
 
             // Setup the form factory with all CSRF and validator extensions
             $csrfProvider = new DefaultCsrfProvider($sf2PluginBaseConfig['csrfSecret']);
-            $validator = Validation::createValidator();
+            $validator = Validation::createValidatorBuilder()
+                ->enableAnnotationMapping()
+                ->getValidator();
             $formFactory = Forms::createFormFactoryBuilder()
                 ->addExtension(new CsrfExtension($csrfProvider))
                 ->addExtension(new ValidatorExtension($validator))

@@ -16,13 +16,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
+
 // Check if configuration is present, otherwise include it
 if (!isset($sf2PluginBaseConfig)) {
     include_once __DIR__.'/../config.php';
 }
 
 // Create an annotation configuration, using the configured environment
-$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($paths, ($sf2PluginBaseConfig['env'] == 'dev'));
+// Tell Doctrine how to autoload the Assert annotations
+AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", __DIR__.'/../vendor/symfony/validator');
+$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($paths, ($sf2PluginBaseConfig['env'] == 'dev'), null, null, false);
 
 // Create an entity manager using the configured DB params and the configuration created above
 $em = \Doctrine\ORM\EntityManager::create($sf2PluginBaseConfig['database'], $config);
