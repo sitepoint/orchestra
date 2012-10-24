@@ -2,7 +2,7 @@
 namespace SitePoint\Sf2PluginBase;
 
 
-class BaseController
+class Controller
 {
     protected $request;
     protected $em;
