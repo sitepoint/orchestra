@@ -56,8 +56,8 @@ class FrontController
             $controller[0]->init($request, $em, $twig, $formFactory);
             $arguments = $resolver->getArguments($request, $controller);
             $this->response = call_user_func_array($controller, $arguments);
-        } catch (Exception $e) {
-            $this->response = 'An error occurred.';
+        } catch (\Exception $e) {
+            wp_die(__('Page not found.'));
         }
     }
 

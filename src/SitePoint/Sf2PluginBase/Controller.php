@@ -143,14 +143,13 @@ class Controller
     }
 
     /**
-     * Returns a NotFoundHttpException
+     * Displays error message and ends script
      *
      * @param string $message
-     * @param Exception $previous
      */
-    public function createNotFoundException($message = 'Not Found', $previous = null)
+    public function createNotFoundException($message = 'Not Found')
     {
-        return new NotFoundHttpException($message, $previous);
+        wp_die(__('Page not found.'));
     }
 
     /**

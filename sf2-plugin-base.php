@@ -2,7 +2,7 @@
 /*
 Plugin Name: Symfony2 Plugin Base
 Description: A solid plugin development base formed of Symfony2 components
-Version: 0.1
+Version: 1.0
 Author: Michael Sauter
 */
 /**
