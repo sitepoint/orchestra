@@ -57,7 +57,7 @@ class FrontController
             $arguments = $resolver->getArguments($request, $controller);
             $this->response = call_user_func_array($controller, $arguments);
         } catch (\Exception $e) {
-            wp_die(__('Page not found.'));
+            wp_die(__('Internal server error: '.$e->getMessage()));
         }
     }
 
