@@ -1,5 +1,5 @@
 <?php
-$sf2_plugin_base_config = array(
+$sf2PluginBaseConfig = array(
     'database' => array(
         'driver' => 'pdo_mysql',
         'user' => 'root',

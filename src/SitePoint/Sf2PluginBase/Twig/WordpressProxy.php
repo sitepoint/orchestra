@@ -15,12 +15,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+namespace SitePoint\Sf2PluginBase\Twig;
 
-// Boot Doctrine
-require_once __DIR__.'/bootstrap-doctrine.php';
-
-// Create HelperSet for the command line, exposing the DB connection and the EntityManager
-$helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
-    'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection()),
-    'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em)
-));
+/**
+ * This class just tries to call the given $function,
+ * allowing users to call Wordpress functions in the template
+ *
+ * Example: {{ wp.bloginfo() }}
+ */
+class WordpressProxy {
+    public function __call($function, $arguments) {
+        if (!function_exists($function)) {
+            throw new BadFunctionCallException('Call to undefined function ' . $function);
+        }
+        return call_user_func_array($function, $arguments);
+    }
+}
