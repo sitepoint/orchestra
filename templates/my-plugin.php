@@ -3,7 +3,7 @@
 Plugin Name: My Plugin
 Description: Description
 Version: 0.1
-Author: Your Name
+Author: My Name
 */
 
 namespace MyCompany\MyPlugin;
