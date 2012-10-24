@@ -1,6 +1,6 @@
 <?php
-require_once 'config.php';
-require_once 'bootstrap-doctrine.php';
+require_once __DIR__.'/../config.php';
+require_once __DIR__.'/bootstrap-doctrine.php';
 
 $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
     'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection()),

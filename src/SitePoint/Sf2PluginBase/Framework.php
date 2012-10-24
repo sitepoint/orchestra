@@ -47,7 +47,7 @@ class Framework
             // bootstrap.php
             if (!class_exists("Doctrine\Common\Version", false)) {
                 include_once($pluginDirectory.'/doctrine-config.php');
-                include_once($baseDir.'/bootstrap-doctrine.php');
+                include_once($baseDir.'/includes/bootstrap-doctrine.php');
             }
 
             // Setup Twig
