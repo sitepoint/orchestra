@@ -32,28 +32,30 @@ class BaseController
         if (false === strpos($controller, '::')) {
             $method = $controller.'Action';
             if (method_exists($this, $method)) {
-                return call_user_func(array($this, $method));
+                return call_user_func_array(array($this, $method), $parameters);
             }
         } else {
             list($class, $method) = explode('::', $controller, 2);
+            $class = Framework::$pluginNamespace.'\\Controller\\'.$class.'Controller';
+            $method .= 'Action';
             if (!class_exists($class)) {
                 throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
             }
             $object = new $class();
-            return call_user_func(array($object, $method));
+            return call_user_func_array(array($object, $method), $parameters);
         }
     }
 
 
     /**
-     * Returns a RedirectResponse to the given URL.
+     * Redirects to the given URL.
      *
      * @param string $url
      * @param integer $status
      */
     public function redirect($url, $status = 302)
     {
-        header('Location: '.$url);
+        header('Location: '.$url, true, $status);
     }
 
     /**
@@ -113,6 +115,11 @@ class BaseController
     public function generateUrl($parameters = array())
     {
         $url = $this->request->getScheme().'://'.$this->request->getHost().$this->request->getBaseUrl();
+
+        if (is_string($parameters)) {
+            $action = $parameters;
+            $parameters = array('action' => $action);
+        }
 
         if (!isset($parameters['page'])) {
             $parameters['page'] = $this->request->query->get('page');

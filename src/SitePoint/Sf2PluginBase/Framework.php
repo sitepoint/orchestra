@@ -17,57 +17,57 @@ use Symfony\Component\HttpFoundation\Request;
 class Framework
 {
     private static $frontController;
-    private static $csrfSecret;
-    private static $language;
     public static $pluginNamespace;
-    private static $pluginDirectory;
+    private static $request;
 
-    public static function init($csrfSecret, $language = 'en')
+    public static function setupPlugin($pluginNamespace, $pluginDirectory, $additionalNamespaces = array(), $additionalPrefixes = array(), $directories = array('views' => '/views', 'cache' => '/cache'))
     {
-        self::$csrfSecret = $csrfSecret;
-        self::$language = $language;
-        include_once __DIR__.'/ClassLoader.php';
-        ClassLoader::init();
-    }
+        global $sf2_plugin_base_config;
 
-    public static function setupPlugin($namespace, $baseDirectory)
-    {
-        self::$pluginNamespace = $namespace;
-        self::$pluginDirectory = $baseDirectory;
-        self::registerNamespace($namespace, $baseDirectory.'/src/');
-    }
+        if (!self::$request) {
+            self::$request = Request::createFromGlobals();
+        }
 
+        $pluginIdentifier = str_replace('\\', ':', $pluginNamespace);
 
+        if (self::$request->query->get('page') == $pluginIdentifier) {
 
-    public static function registerController($pluginIdentifier, $directories = array('views' => '/views', 'cache' => '/cache'))
-    {
-        $request = Request::createFromGlobals();
+            $additionalNamespaces[$pluginNamespace] = $pluginDirectory.'/src/';
+            ClassLoader::$classLoader->registerNamespaces($additionalNamespaces);
 
-        if ($request->query->get('page') == $pluginIdentifier) {
+            if (count($additionalPrefixes) > 0) {
+                ClassLoader::$classLoader->registerPrefixes($additionalPrefixes);
+            }
+
+            self::$pluginNamespace = $pluginNamespace;
 
             $baseDir = __DIR__.'/../../..';
             $vendorDir = $baseDir.'/vendor';
 
             // bootstrap.php
             if (!class_exists("Doctrine\Common\Version", false)) {
-                include_once(self::$pluginDirectory.'/doctrine-config.php');
-                include_once($baseDir.'/bootstrap_doctrine.php');
+                include_once($pluginDirectory.'/doctrine-config.php');
+                include_once($baseDir.'/bootstrap-doctrine.php');
             }
 
             // Setup Twig
-            $csrfProvider = new DefaultCsrfProvider(self::$csrfSecret);
-            $translator = new Translator(self::$language);
+            $csrfProvider = new DefaultCsrfProvider($sf2_plugin_base_config['csrfSecret']);
+            $translator = new Translator($sf2_plugin_base_config['language']);
             $translator->addLoader('xlf', new XliffFileLoader());
-            $translator->addResource('xlf', realpath($vendorDir.'/symfony/form/Symfony/Component/Form/Resources/translations/validators.'.self::$language.'.xlf'), self::$language, 'validators');
-            $translator->addResource('xlf', realpath($vendorDir.'/symfony/validator/Symfony/Component/Validator/Resources/translations/validators.'.self::$language.'.xlf'), self::$language, 'validators');
+            $translator->addResource('xlf', realpath($vendorDir.'/symfony/form/Symfony/Component/Form/Resources/translations/validators.'.$sf2_plugin_base_config['language'].'.xlf'), $sf2_plugin_base_config['language'], 'validators');
+            $translator->addResource('xlf', realpath($vendorDir.'/symfony/validator/Symfony/Component/Validator/Resources/translations/validators.'.$sf2_plugin_base_config['language'].'.xlf'), $sf2_plugin_base_config['language'], 'validators');
             $loader = new \Twig_Loader_Filesystem(array(
-                realpath(self::$pluginDirectory.$directories['views']),
+                realpath($pluginDirectory.$directories['views']),
                 realpath($vendorDir.'/symfony/twig-bridge/Symfony/Bridge/Twig/Resources/views/Form'),
             ));
             $twigFormEngine = new TwigRendererEngine(array('form_div_layout.html.twig'));
-            $twig = new \Twig_Environment($loader, array(
-                'cache' => realpath(self::$pluginDirectory.$directories['cache']),
-            ));
+            $twigEnvironmentOptions = array();
+            if ($sf2_plugin_base_config['mode'] == 'prod') {
+                $twigEnvironmentOptions['cache'] = realpath($pluginDirectory.$directories['cache']);
+            } else {
+                $twigEnvironmentOptions['cache'] = false;
+            }
+            $twig = new \Twig_Environment($loader, $twigEnvironmentOptions);
             $twig->addExtension(new TranslationExtension($translator));
             $twig->addExtension(new FormExtension(new TwigRenderer($twigFormEngine, null)));
             $twigFormEngine->setEnvironment($twig);
@@ -79,17 +79,14 @@ class Framework
                 ->addExtension(new ValidatorExtension($validator))
                 ->getFormFactory();
 
-            self::$frontController = new FrontController($request, $em, $twig, $formFactory);
+            self::$frontController = new FrontController(self::$request, $em, $twig, $formFactory);
         }
+
+        return $pluginIdentifier;
     }
 
     public static function getResponse()
     {
         return self::$frontController->getResponse();
-    }
-
-    public static function registerNamespace($namespace, $directory)
-    {
-        ClassLoader::$classLoader->registerNamespace($namespace, $directory);
     }
 }
