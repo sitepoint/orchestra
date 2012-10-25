@@ -1,10 +1,5 @@
+#!/usr/bin/env php
 <?php
-/*
-Plugin Name: Symfony2 Plugin Base
-Description: A solid plugin development base formed of Symfony2 components
-Version: 1.0
-Author: Michael Sauter
-*/
 /**
  * Copyright 2012 Michael Sauter <mail@michaelsauter.net>
  * Sf2PluginBase is a TripleTime project of SitePoint.com
@@ -23,4 +18,11 @@ Author: Michael Sauter
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+use Sf2PluginBase\Command\CreatePluginCommand;
+use Symfony\Component\Console\Application;
+
 require_once __DIR__.'/includes/bootstrap.php';
+
+$application = new Application();
+$application->add(new CreatePluginCommand);
+$application->run();

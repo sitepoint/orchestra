@@ -1,19 +1,19 @@
 <?php
 /*
-Plugin Name: My Plugin
-Description: Description
+Plugin Name: {{ pluginName }}
+Description: Plugin description
 Version: 0.1
-Author: My Name
+Author: Your Name
 */
 
-namespace MyPlugin;
+namespace {{ pluginNamespace }};
 
-class MyPlugin
+class {{ pluginNamespace }}
 {
     public function __construct()
     {
         $identifier = \Sf2PluginBase\Framework::setupPlugin(__NAMESPACE__, __DIR__);
-        add_menu_page('My Plugin Options', 'My Plugin', 'manage_options', $identifier, array($this, 'output'));
+        add_menu_page('{{ pluginName }} Options', '{{ pluginName }}', 'manage_options', $identifier, array($this, 'output'));
     }
 
     public function output()
@@ -26,5 +26,5 @@ class MyPlugin
 }
 
 add_action('admin_menu', function() {
-    new MyPlugin();
+    new {{ pluginNamespace }}();
 });
