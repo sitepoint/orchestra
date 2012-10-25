@@ -1,3 +1,7 @@
 <?php
+require_once '../sf2-plugin-base/includes/bootstrap.php';
+$sf2PluginBaseClassLoader->registerNamespaces(array(
+    '{{ pluginNamespace }}' => __DIR__ . '/src/',
+));
 require_once 'doctrine-config.php';
 require_once '../sf2-plugin-base/includes/cli-doctrine.php';

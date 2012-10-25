@@ -84,14 +84,14 @@ class Controller
      * $controller must be either the name of an action,
      * or both controller and action, separated by a double colon
      *
-     * Example: "index" or "Default::index"
+     * Example: "index" or "Default:index"
      *
      * @param string $controller
      * @param array $parameters
      */
     public function forward($controller, $parameters = array())
     {
-        if (false === strpos($controller, '::')) {
+        if (false === strpos($controller, ':')) {
             $method = $controller.'Action';
             if (method_exists($this, $method)) {
                 return call_user_func_array(array($this, $method), $parameters);
@@ -99,7 +99,7 @@ class Controller
                 throw new \InvalidArgumentException(sprintf('Method "%s" does not exist.', $method));
             }
         } else {
-            list($class, $method) = explode('::', $controller, 2);
+            list($class, $method) = explode(':', $controller, 2);
             $class = Framework::$pluginNamespace.'\\Controller\\'.$class.'Controller';
             $method .= 'Action';
             if (class_exists($class)) {
@@ -137,6 +137,7 @@ class Controller
      */
     public function render($view, $parameters = array())
     {
+        $view = str_replace(':', '/', $view);
         $parameters['app'] = array(
             'session' => $this->session
         );

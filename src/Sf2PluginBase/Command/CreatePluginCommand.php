@@ -46,17 +46,28 @@ class CreatePluginCommand extends Command
 
         // create directories
         try {
-            $fs->mkdir(array($pluginIdentifier, $pluginIdentifier.'/views', $pluginIdentifier.'/src', $pluginIdentifier.'/src/'.$pluginNamespace), 0766);
-            $fs->mkdir($pluginIdentifier.'/cache');
+            $fs->mkdir(array(
+                $pluginIdentifier,
+                $pluginIdentifier.'/views',
+                $pluginIdentifier.'/cache',
+                $pluginIdentifier.'/src',
+                $pluginIdentifier.'/src/'.$pluginNamespace,
+                $pluginIdentifier.'/src/'.$pluginNamespace.'/Controller',
+                $pluginIdentifier.'/src/'.$pluginNamespace.'/Entity',
+                $pluginIdentifier.'/src/'.$pluginNamespace.'/Form/Type'
+            ));
         } catch (IOException $e) {
             $output->writeln('An error occured while creating directories: '.$e->getMessage());
         }
 
+        $templatesDirectory = __DIR__.'/../../../templates';
         // generate files
-        $loader = new \Twig_Loader_Filesystem(__DIR__.'/../../../templates');
+        $loader = new \Twig_Loader_Filesystem($templatesDirectory);
         $twig = new \Twig_Environment($loader);
 
-        file_put_contents($pluginIdentifier.'/cli-config.php', $twig->render('cli-config.php.twig', array()));
+        file_put_contents($pluginIdentifier.'/cli-config.php', $twig->render('cli-config.php.twig', array(
+            'pluginNamespace' => $pluginNamespace,
+        )));
 
         file_put_contents($pluginIdentifier.'/doctrine-config.php', $twig->render('doctrine-config.php.twig', array(
             'pluginIdentifier' => $pluginIdentifier,
@@ -69,6 +80,27 @@ class CreatePluginCommand extends Command
             'pluginName' => $pluginName
         )));
 
+        file_put_contents($pluginIdentifier.'/src/'.$pluginNamespace.'/Controller/DefaultController.php', $twig->render('src/DefaultController.php.twig', array(
+            'pluginNamespace' => $pluginNamespace,
+        )));
+
+        file_put_contents($pluginIdentifier.'/src/'.$pluginNamespace.'/Entity/Person.php', $twig->render('src/Person.php.twig', array(
+            'pluginIdentifier' => $pluginIdentifier,
+            'pluginNamespace' => $pluginNamespace,
+        )));
+
+        file_put_contents($pluginIdentifier.'/src/'.$pluginNamespace.'/Form/Type/PersonType.php', $twig->render('src/PersonType.php.twig', array(
+            'pluginNamespace' => $pluginNamespace,
+        )));
+
+        // copy files
+        $fs->copy($templatesDirectory.'/views/index.html.twig', $pluginIdentifier.'/views/Default/index.html.twig');
+        $fs->copy($templatesDirectory.'/views/create.html.twig', $pluginIdentifier.'/views/Default/create.html.twig');
+        $fs->copy($templatesDirectory.'/views/edit.html.twig', $pluginIdentifier.'/views/Default/edit.html.twig');
+
         $output->writeln('Created "'.$pluginName.'" plugin in "'.$pluginIdentifier.'"');
+        $output->writeln('To finish, you need to take these steps too:');
+        $output->writeln('1. Activate your plugin in "Plugins"');
+        $output->writeln('2. Execute "cd '.$pluginIdentifier.' && ../sf2-plugin-base/vendor/bin/doctrine orm:schema-tool:update --force"');
     }
 }

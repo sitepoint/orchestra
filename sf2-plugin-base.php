@@ -23,4 +23,11 @@ Author: Michael Sauter
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-require_once __DIR__.'/includes/bootstrap.php';
+$sf2PluginBaseConfig = null;
+$sf2PluginBaseClassLoader = null;
+
+add_action('_admin_menu', function() {
+    global $sf2PluginBaseConfig;
+    global $sf2PluginBaseClassLoader;
+    include_once __DIR__.'/includes/bootstrap.php';
+});

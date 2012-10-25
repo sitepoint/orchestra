@@ -78,7 +78,7 @@ class PluginBaseExtension extends \Twig_Extension
      */
     public function functionPluginUrl($controller, $arguments = array())
     {
-        list($arguments['page'], $arguments['controller'], $arguments['action']) = explode('::', $controller, 3);
+        list($arguments['page'], $arguments['controller'], $arguments['action']) = explode(':', $controller, 3);
 
         if (!$arguments['page'] || !$arguments['controller']) {
             throw new \InvalidArgumentException('Invalid call of pluginUrl(). You need to specify at least controller and action');
