@@ -1,0 +1,52 @@
+<?php
+namespace {{ pluginNamespace }}\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="wp_{{ pluginNamespace|lower }}_persons")
+ */
+class Person
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
+     */
+    protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     * @Assert\Length(
+     *      min = "4",
+     *      max = "50"
+     * )
+     */
+    protected $name;
+
+    public function __construct()
+    {
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+}

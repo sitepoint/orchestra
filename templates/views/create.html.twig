@@ -1,0 +1,10 @@
+<div class="wrap">
+    <h3>Create new person</h3>
+
+    <form action="{{ pluginUrl('Default:create') }}" method="POST" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+
+        <input type="submit" class="button-primary" value="Create" />
+    </form>
+</div>

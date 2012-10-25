@@ -1,0 +1,73 @@
+<?php
+namespace {{ pluginNamespace }}\Controller;
+
+use Symfony\Component\HttpFoundation\Request;
+use Sf2PluginBase\Controller;
+use {{ pluginNamespace }}\Entity\Person;
+use {{ pluginNamespace }}\Form\Type\PersonType;
+
+class DefaultController extends Controller
+{
+    public function indexAction()
+    {
+        $persons = $this->em->getRepository('{{ pluginNamespace }}\Entity\Person')->findAll();
+
+        return $this->render('Default:index.html.twig', array(
+            'persons' => $persons,
+        ));
+    }
+
+    public function createAction(Request $request)
+    {
+        $person = new Person();
+
+        $form = $this->createForm(new PersonType(), $person);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($_POST[$form->getName()]);
+
+            if ($form->isValid()) {
+                $this->em->persist($person);
+                $this->em->flush();
+                $this->session->getFlashBag()->add('notice', 'Person created!');
+                $this->redirect($this->generatePluginUrl('index'));
+            }
+        }
+
+        return $this->render('Default:create.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    public function editAction(Request $request, $id)
+    {
+        $person = $this->em->getRepository('{{ pluginNamespace }}\Entity\Person')->find($id);
+
+        $form = $this->createForm(new PersonType(), $person);
+
+        if ($request->isMethod('POST')) {
+            $form->bind($_POST[$form->getName()]);
+
+            if ($form->isValid()) {
+                $this->em->persist($person);
+                $this->em->flush();
+                $this->session->getFlashBag()->add('notice', 'Person edited!');
+                $this->redirect($this->generatePluginUrl('index'));
+            }
+        }
+
+        return $this->render('Default:edit.html.twig', array(
+            'form' => $form->createView(),
+            'id' => $id
+        ));
+    }
+
+    public function deleteAction($id)
+    {
+        $person = $this->em->getRepository('{{ pluginNamespace }}\Entity\Person')->find($id);
+        $this->em->remove($person);
+        $this->em->flush();
+        $this->session->getFlashBag()->add('notice', 'Person deleted!');
+        $this->redirect($this->generatePluginUrl('index'));
+    }
+}

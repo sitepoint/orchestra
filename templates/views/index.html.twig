@@ -1,0 +1,29 @@
+<div class="wrap">
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div id="message" class="updated">
+            <p>{{ flashMessage }}</p>
+        </div>
+    {% endfor %}
+    <p>
+        <a href="{{ pluginUrl('Default:create') }}">Create new person</a>
+    </p>
+    <table class="widefat">
+        <thead>
+            <tr>
+                <th width="100%">Name</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for person in persons %}
+            <tr>
+                <td>{{ person }}</td>
+                <td><a href="{{ pluginUrl('Default:edit', { 'id': person.id }) }}">Edit</a></td>
+                <td><a href="{{ pluginUrl('Default:delete', { 'id': person.id }) }}">Delete</a></td>
+            </tr>
+        {%  endfor %}
+        </tbody>
+    </table>
+</div>
