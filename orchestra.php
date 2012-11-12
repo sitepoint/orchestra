@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Symfony2 Plugin Base
-Description: A solid plugin development base formed of Symfony2 components
-Version: 1.0
+Plugin Name: Orchestra
+Description: A solid plugin development base formed of Symfony2 components, Twig and Doctrine2
+Version: 0.9
 Author: Michael Sauter
 */
 /**
