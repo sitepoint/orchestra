@@ -1,5 +1,5 @@
 <?php
-namespace Sf2PluginBase\Command;
+namespace Orchestra\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -101,6 +101,6 @@ class CreatePluginCommand extends Command
         $output->writeln('Created "'.$pluginName.'" plugin in "'.$pluginIdentifier.'"');
         $output->writeln('To finish, you need to take these steps too:');
         $output->writeln('1. Activate your plugin in "Plugins"');
-        $output->writeln('2. Execute "cd '.$pluginIdentifier.' && ../sf2-plugin-base/vendor/bin/doctrine orm:schema-tool:update --force"');
+        $output->writeln('2. Execute "cd '.$pluginIdentifier.' && ../orchestra/vendor/bin/doctrine orm:schema-tool:update --force"');
     }
 }

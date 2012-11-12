@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright 2012 Michael Sauter <mail@michaelsauter.net>
- * Sf2PluginBase is a TripleTime project of SitePoint.com
+ * Orchestra is a TripleTime project of SitePoint.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -18,7 +18,7 @@
  */
 
 // Load configuration and UniversalClassLoader
-// Introduces $sf2PluginBaseConfig into the global namespace
+// Introduces $orchestraConfig into the global namespace
 include_once __DIR__.'/../config.php';
 include_once __DIR__.'/../vendor/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php';
 
@@ -26,13 +26,13 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
 
 /**
 * Create an instance of UniversalClassLoader and register
-* all prefixes / namespaces which are part of Sf2PluginBase
+* all prefixes / namespaces which are part of Orchestra
 */
-$sf2PluginBaseClassLoader = new UniversalClassLoader();
-$sf2PluginBaseClassLoader->registerPrefixes(array(
+$orchestraClassLoader = new UniversalClassLoader();
+$orchestraClassLoader->registerPrefixes(array(
     'Twig_'  => __DIR__.'/../vendor/twig/twig/lib',
 ));
-$sf2PluginBaseClassLoader->registerNamespaces(array(
+$orchestraClassLoader->registerNamespaces(array(
     'Symfony\\Component\\Yaml' => __DIR__.'/../vendor/symfony/yaml/',
     'Symfony\\Component\\Validator' => __DIR__.'/../vendor/symfony/validator/',
     'Symfony\\Component\\Translation' => __DIR__.'/../vendor/symfony/translation/',
@@ -51,6 +51,6 @@ $sf2PluginBaseClassLoader->registerNamespaces(array(
     'Doctrine\\ORM' => __DIR__.'/../vendor/doctrine/orm/lib/',
     'Doctrine\\DBAL' => __DIR__.'/../vendor/doctrine/dbal/lib/',
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine/common/lib/',
-    'Sf2PluginBase' => __DIR__ . '/../src/',
+    'Orchestra' => __DIR__ . '/../src/',
 ));
-$sf2PluginBaseClassLoader->register();
+$orchestraClassLoader->register();

@@ -7,7 +7,7 @@ Author: Michael Sauter
 */
 /**
  * Copyright 2012 Michael Sauter <mail@michaelsauter.net>
- * Sf2PluginBase is a TripleTime project of SitePoint.com
+ * Orchestra is a TripleTime project of SitePoint.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -23,11 +23,11 @@ Author: Michael Sauter
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-$sf2PluginBaseConfig = null;
-$sf2PluginBaseClassLoader = null;
+$orchestraConfig = null;
+$orchestraClassLoader = null;
 
-add_action('_admin_menu', function() {
-    global $sf2PluginBaseConfig;
-    global $sf2PluginBaseClassLoader;
+//add_action('_admin_menu', function() {
+    global $orchestraConfig;
+    global $orchestraClassLoader;
     include_once __DIR__.'/includes/bootstrap.php';
-});
+//});

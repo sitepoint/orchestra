@@ -1,5 +1,5 @@
 <?php
-$sf2PluginBaseConfig = array(
+$orchestraConfig = array(
     'database' => array(
         'driver' => 'pdo_mysql', // only MySQL is supported right now
         'user' => 'root',

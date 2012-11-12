@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright 2012 Michael Sauter <mail@michaelsauter.net>
- * Sf2PluginBase is a TripleTime project of SitePoint.com
+ * Orchestra is a TripleTime project of SitePoint.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-namespace Sf2PluginBase;
+namespace Orchestra;
 
 use Symfony\Component\Validator\Validation;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
@@ -30,22 +30,22 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\HttpFoundation\Request;
-use Sf2PluginBase\Twig\WordpressProxy;
-use Sf2PluginBase\Twig\PluginBaseExtension;
+use Orchestra\Twig\WordpressProxy;
+use Orchestra\Twig\PluginBaseExtension;
 
 /**
- * Central class of Sf2PluginBase
+ * Central class of Orchestra
  *
- * Plugins can use this class to tap into the functionality of Sf2PluginBase.
+ * Plugins can use this class to tap into the functionality of Orchestra.
  * To do this, they need to call Framework::setupPlugin() during the "admin_menu" hook.
- * To get the returned content of Sf2PluginBase, they need to call Framework::getResponse().
+ * To get the returned content of Orchestra, they need to call Framework::getResponse().
  */
 class Framework
 {
     /**
      * Front controller
      *
-     * @var Sf2PluginBase\FrontController
+     * @var Orchestra\FrontController
      */
     private static $frontController;
 
@@ -65,7 +65,7 @@ class Framework
 
     /**
      * Determines if the calling plugin is currently active (that is, it was requested).
-     * If so, configure Sf2PluginBase for this plugin (e.g. setting namespace, directories etc.)
+     * If so, configure Orchestra for this plugin (e.g. setting namespace, directories etc.)
      * and construct a front controller to handle the current request.
      *
      * @param $pluginNamespace
@@ -77,8 +77,8 @@ class Framework
      */
     public static function setupPlugin($pluginNamespace, $pluginDirectory, $additionalNamespaces = array(), $additionalPrefixes = array(), $directories = array('src' => '/src', 'views' => '/views', 'cache' => '/cache'))
     {
-        global $sf2PluginBaseConfig;
-        global $sf2PluginBaseClassLoader;
+        global $orchestraConfig;
+        global $orchestraClassLoader;
 
         // If there is no $request set yet, create one from globals
         // This needs to be done only once because the request is the
@@ -96,11 +96,11 @@ class Framework
             // Register the namespace of the calling plugin
             // and any additional namespaces passed
             $additionalNamespaces[$pluginNamespace] = $pluginDirectory.$directories['src'].'/';
-            $sf2PluginBaseClassLoader->registerNamespaces($additionalNamespaces);
+            $orchestraClassLoader->registerNamespaces($additionalNamespaces);
 
             // Register prefixes is passed
             if (count($additionalPrefixes) > 0) {
-                $sf2PluginBaseClassLoader->registerPrefixes($additionalPrefixes);
+                $orchestraClassLoader->registerPrefixes($additionalPrefixes);
             }
 
             self::$pluginNamespace = $pluginNamespace;
@@ -114,17 +114,17 @@ class Framework
             }
 
             // Setup Twig
-            $translator = new Translator($sf2PluginBaseConfig['language']);
+            $translator = new Translator($orchestraConfig['language']);
             $translator->addLoader('xlf', new XliffFileLoader());
-            $translator->addResource('xlf', realpath($vendorDir.'/symfony/form/Symfony/Component/Form/Resources/translations/validators.'.$sf2PluginBaseConfig['language'].'.xlf'), $sf2PluginBaseConfig['language'], 'validators');
-            $translator->addResource('xlf', realpath($vendorDir.'/symfony/validator/Symfony/Component/Validator/Resources/translations/validators.'.$sf2PluginBaseConfig['language'].'.xlf'), $sf2PluginBaseConfig['language'], 'validators');
+            $translator->addResource('xlf', realpath($vendorDir.'/symfony/form/Symfony/Component/Form/Resources/translations/validators.'.$orchestraConfig['language'].'.xlf'), $orchestraConfig['language'], 'validators');
+            $translator->addResource('xlf', realpath($vendorDir.'/symfony/validator/Symfony/Component/Validator/Resources/translations/validators.'.$orchestraConfig['language'].'.xlf'), $orchestraConfig['language'], 'validators');
             $loader = new \Twig_Loader_Filesystem(array(
                 realpath($pluginDirectory.$directories['views']),
                 realpath($vendorDir.'/symfony/twig-bridge/Symfony/Bridge/Twig/Resources/views/Form'),
             ));
             $twigFormEngine = new TwigRendererEngine(array('form_div_layout.html.twig'));
             $twigEnvironmentOptions = array();
-            if ($sf2PluginBaseConfig['mode'] == 'prod') {
+            if ($orchestraConfig['mode'] == 'prod') {
                 $twigEnvironmentOptions['cache'] = realpath($pluginDirectory.$directories['cache']);
             } else {
                 $twigEnvironmentOptions['cache'] = false;
@@ -137,7 +137,7 @@ class Framework
             $twigFormEngine->setEnvironment($twig);
 
             // Setup the form factory with all CSRF and validator extensions
-            $csrfProvider = new DefaultCsrfProvider($sf2PluginBaseConfig['csrfSecret']);
+            $csrfProvider = new DefaultCsrfProvider($orchestraConfig['csrfSecret']);
             $validator = Validation::createValidatorBuilder()
                 ->enableAnnotationMapping()
                 ->getValidator();

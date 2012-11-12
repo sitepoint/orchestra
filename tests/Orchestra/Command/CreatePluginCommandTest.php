@@ -2,7 +2,7 @@
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Filesystem\Filesystem;
-use Sf2PluginBase\Command\CreatePluginCommand;
+use Orchestra\Command\CreatePluginCommand;
 
 require_once __DIR__.'/../../../includes/bootstrap.php';
 

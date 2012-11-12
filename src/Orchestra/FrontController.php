@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright 2012 Michael Sauter <mail@michaelsauter.net>
- * Sf2PluginBase is a TripleTime project of SitePoint.com
+ * Orchestra is a TripleTime project of SitePoint.com
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
-namespace Sf2PluginBase;
+namespace Orchestra;
 
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 
