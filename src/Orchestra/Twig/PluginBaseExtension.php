@@ -78,16 +78,18 @@ class PluginBaseExtension extends \Twig_Extension
      */
     public function functionPluginUrl($controller, $arguments = array())
     {
-        list($arguments['page'], $arguments['controller'], $arguments['action']) = explode(':', $controller, 3);
+        $controllerParts = explode(':', $controller, 3);
 
-        if (!$arguments['page'] || !$arguments['controller']) {
+        if (count($controllerParts) < 2) {
             throw new \InvalidArgumentException('Invalid call of pluginUrl(). You need to specify at least controller and action');
-        }
-
-        if (!$arguments['action']) {
-            $arguments['action'] = $arguments['controller'];
-            $arguments['controller'] = $arguments['page'];
+        } elseif (count($controllerParts) == 2) {
+            $arguments['action'] = $controllerParts[1];
+            $arguments['controller'] = $controllerParts[0];
             $arguments['page'] = $this->request->query->get('page');
+        } else {
+            $arguments['action'] = $controllerParts[2];
+            $arguments['controller'] = $controllerParts[1];
+            $arguments['page'] = $controllerParts[0];
         }
 
         return Controller::generateUrl($this->request, $arguments);

@@ -75,7 +75,7 @@ class Framework
      * @param array $directories
      * @return mixed
      */
-    public static function setupPlugin($pluginNamespace, $pluginDirectory, $additionalNamespaces = array(), $additionalPrefixes = array(), $directories = array('src' => '/src', 'views' => '/views', 'cache' => '/cache'))
+    public static function setupPlugin($pluginNamespace, $pluginDirectory, $additionalNamespaces = array(), $additionalPrefixes = array(), $directories = array('src' => '/src', 'views' => '/resources/views', 'cache' => '/cache'))
     {
         global $orchestraConfig;
         global $orchestraClassLoader;
@@ -124,7 +124,7 @@ class Framework
             ));
             $twigFormEngine = new TwigRendererEngine(array('form_div_layout.html.twig'));
             $twigEnvironmentOptions = array();
-            if ($orchestraConfig['mode'] == 'prod') {
+            if ($orchestraConfig['env'] == 'prod') {
                 $twigEnvironmentOptions['cache'] = realpath($pluginDirectory.$directories['cache']);
             } else {
                 $twigEnvironmentOptions['cache'] = false;
