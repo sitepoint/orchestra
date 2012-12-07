@@ -50,6 +50,7 @@ $orchestraClassLoader->registerNamespaces(array(
     'SessionHandlerInterface' => __DIR__.'/../vendor/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs',
     'Doctrine\\ORM' => __DIR__.'/../vendor/doctrine/orm/lib/',
     'Doctrine\\DBAL' => __DIR__.'/../vendor/doctrine/dbal/lib/',
+    'Doctrine\\DBAL\\Migrations' => __DIR__.'/../vendor/doctrine/migrations/lib/',
     'Doctrine\\Common' => __DIR__.'/../vendor/doctrine/common/lib/',
     'Orchestra' => __DIR__ . '/../src/',
 ));

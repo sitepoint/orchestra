@@ -44,7 +44,8 @@ rendered and stored at this stage, because later on, the headers are already sen
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. If you use any entities, the databse can be updated via
 `../orchestra/vendor/bin/doctrine orm:schema-tool:update --force` from your plugin root directory
-
+5. When you want to work with migrations (which is recommended), create a migrations-configuration.yml in you plugin
+root directory, then run the migrations with the --configuration==migrations-configuration.yml option.
 
 == Frequently Asked Questions ==
 
