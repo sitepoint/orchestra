@@ -31,3 +31,5 @@ $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($enti
 
 // Create an entity manager using the configured DB params and the configuration created above
 $em = \Doctrine\ORM\EntityManager::create($orchestraConfig['database'], $config);
+
+$em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');

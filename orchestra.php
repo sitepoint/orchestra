@@ -25,9 +25,4 @@ Author: Michael Sauter
 
 $orchestraConfig = null;
 $orchestraClassLoader = null;
-
-//add_action('_admin_menu', function() {
-    global $orchestraConfig;
-    global $orchestraClassLoader;
-    include_once __DIR__.'/includes/bootstrap.php';
-//});
+include_once __DIR__.'/includes/bootstrap.php';

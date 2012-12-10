@@ -4,7 +4,7 @@ $orchestraConfig = array(
         'driver' => 'pdo_mysql', // only MySQL is supported right now
         'user' => 'root',
         'password' => '',
-        'dbname' => 'wp'
+        'dbname' => 'wordpress'
     ),
     'csrfSecret' => 'sxZ8vumGNx0x10d7a0GKbN8c0V5DZP', // replace with your secret
     'env' => 'dev', // set this to "prod" when using in production
