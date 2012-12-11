@@ -24,7 +24,7 @@ class DefaultController extends Controller
         $form = $this->createForm(new PersonType(), $person);
 
         if ($request->isMethod('POST')) {
-            $form->bind($_POST[$form->getName()]);
+            $form->bind($request->request->get($form->getName()));
 
             if ($form->isValid()) {
                 $this->em->persist($person);
@@ -46,7 +46,7 @@ class DefaultController extends Controller
         $form = $this->createForm(new PersonType(), $person);
 
         if ($request->isMethod('POST')) {
-            $form->bind($_POST[$form->getName()]);
+            $form->bind($request->request->get($form->getName()));
 
             if ($form->isValid()) {
                 $this->em->persist($person);
