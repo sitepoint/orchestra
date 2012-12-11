@@ -30,6 +30,7 @@ use Symfony\Bridge\Twig\Extension\TranslationExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Orchestra\Twig\WordpressProxy;
 use Orchestra\Twig\PluginBaseExtension;
 
@@ -83,8 +84,17 @@ class Framework
         // If there is no $request set yet, create one from globals
         // This needs to be done only once because the request is the
         // same, no matter which plugin called Framework::setupPlugin()
+        // Also, make sure to undo WP addslasjes madness
+        // Code is taken from Request::createFromGlobals()
         if (!self::$request) {
-            self::$request = Request::createFromGlobals();
+            $request = new Request(stripslashes_deep($_GET), stripslashes_deep($_POST), array(), stripslashes_deep($_COOKIE), stripslashes_deep($_FILES), stripslashes_deep($_SERVER));
+            if (0 === strpos($request->headers->get('CONTENT_TYPE'), 'application/x-www-form-urlencoded')
+                && in_array(strtoupper($request->server->get('REQUEST_METHOD', 'GET')), array('PUT', 'DELETE', 'PATCH'))
+            ) {
+                parse_str($request->getContent(), $data);
+                $request->request = new ParameterBag($data);
+            }
+            self::$request = $request;
         }
 
         // Generate plugin identifier based on the namespace by stripping the backslashes
