@@ -1,5 +1,5 @@
 === Orchestra ===
-Contributors: markjaquith, mdawaffe (this should be a list of wordpress.org userid's)
+Contributors:
 Tags: symfony2, mvc, options, form
 Requires at least: 3.4
 Tested up to: 3.4.2
@@ -46,6 +46,8 @@ rendered and stored at this stage, because later on, the headers are already sen
 `../orchestra/vendor/bin/doctrine orm:schema-tool:update --force` from your plugin root directory
 5. When you want to work with migrations (which is recommended), create a migrations-configuration.yml in you plugin
 root directory, then run the migrations with the --configuration==migrations-configuration.yml option.
+6. While you're developing, make sure to set `WP_DEBUG` in `wp-config.php` to `true` in order to have the caches
+rewritten automatically
 
 == Frequently Asked Questions ==
 
