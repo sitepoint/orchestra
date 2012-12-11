@@ -17,6 +17,10 @@
  * <http://www.doctrine-project.org>.
  */
 
+// Load WP config
+define('WP_NO_BOOTSRAP', true);
+require_once __DIR__.'/../../../../../../../wp-config.php';
+
 (@include_once __DIR__ . '/../vendor/autoload.php') || @include_once __DIR__ . '/../../../autoload.php';
 $configFile = getcwd() . DIRECTORY_SEPARATOR . 'cli-config.php';
 
