@@ -40,6 +40,10 @@ if (file_exists($configFile)) {
             break;
         }
     }
+} else {
+    trigger_error(
+        'Configuration file [' . $configFile . '] does not exist.', E_ERROR
+    );
 }
 
 $helperSet = ($helperSet) ?: new \Symfony\Component\Console\Helper\HelperSet();
