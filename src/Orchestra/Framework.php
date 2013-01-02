@@ -76,7 +76,7 @@ class Framework
      * @param array $directories
      * @return mixed
      */
-    public static function setupPlugin($pluginNamespace, $pluginDirectory, $additionalNamespaces = array(), $additionalPrefixes = array(), $directories = array('src' => '/src', 'views' => '/resources/views', 'cache' => '/cache'))
+    public static function setupPlugin($pluginNamespace, $pluginDirectory, $additionalNamespaces = array(), $additionalPrefixes = array(), $directories = array('src' => '/src', 'views' => '/resources/views', 'cache' => '/data/cache'))
     {
         global $orchestraConfig;
         global $orchestraClassLoader;
