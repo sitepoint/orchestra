@@ -29,7 +29,13 @@ if (!isset($orchestraConfig)) {
 AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", __DIR__.'/../vendor/symfony/validator');
 $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($entityPaths, ($orchestraConfig['env'] == 'dev'), null, null, false);
 
+// Table Prefix
+$evm = new \Doctrine\Common\EventManager;
+global $wpdb;
+$tablePrefix = new \Orchestra\DoctrineExtensions\TablePrefix($wpdb->prefix);
+$evm->addEventListener(\Doctrine\ORM\Events::loadClassMetadata, $tablePrefix);
+
 // Create an entity manager using the configured DB params and the configuration created above
-$em = \Doctrine\ORM\EntityManager::create($orchestraConfig['database'], $config);
+$em = \Doctrine\ORM\EntityManager::create($orchestraConfig['database'], $config, $evm);
 
 $em->getConnection()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
