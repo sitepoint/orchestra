@@ -49,7 +49,9 @@ class CreatePluginCommand extends Command
             $fs->mkdir(array(
                 $pluginIdentifier,
                 $pluginIdentifier.'/views',
-                $pluginIdentifier.'/cache',
+                $pluginIdentifier.'/data',
+                $pluginIdentifier.'/data/cache',
+                $pluginIdentifier.'/data/proxies',
                 $pluginIdentifier.'/src',
                 $pluginIdentifier.'/src/'.$pluginNamespace,
                 $pluginIdentifier.'/src/'.$pluginNamespace.'/Controller',

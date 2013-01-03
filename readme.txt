@@ -28,18 +28,38 @@ The basic architecture is as follows:
 
 1. Put `orchestra` into the `/wp-content/plugins/` directory
 2. Inside `orchestra`, run `curl -s https://getcomposer.org/installer | php` and then `php composer.phar install`
-3. Edit `config.php` to match your setup
+3. (Optionally) edit `config.php` to match your setup
 4. Activate the plugin through the 'Plugins' menu in WordPress
+5. To use the CLI, you need to update `wp-config.php`. At the very end, replace this:
+```
+define('ABSPATH', dirname(__FILE__).'/');
+require_once(ABSPATH.'wp-settings.php');
+```
+with:
+```
+// Do not bootstrap wordpress if WP_NO_BOOTSRAP is set (e.g. when using Orchestra CLI tools)
+if (!defined('WP_NO_BOOTSRAP')) {
+    define('ABSPATH', dirname(__FILE__).'/');
+    require_once(ABSPATH.'wp-settings.php');
+}
+```
 
 
-== Usage ==
+== General Usage ==
 
 1. Go to `wp-content/plugins`
 2. Execute `orchestra/console plugin:create your-plugin-name-here`
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. If you use any entities, the databse can be updated via `../orchestra/vendor/bin/doctrine orm:schema-tool:update --force` from your plugin root directory
-5. When you want to work with migrations (which is recommended), create a migrations-configuration.yml in you plugin root directory, then run the migrations with the --configuration==migrations-configuration.yml option.
-6. While you're developing, make sure to set `WP_DEBUG` in `wp-config.php` to `true` in order to have the caches rewritten automatically
+4. While you're developing, make sure to set `WP_DEBUG` in `wp-config.php` to `true` in order to have the caches rewritten automatically
+
+
+== Interacting With the Database ==
+Orchestra interacts with the database via Doctrine2. It also supports multisite setup out-of-the-box. When creating entities, you should specify the table name explicitly, but leave out the prefix as this is determined by Orchestra.
+To create or modify the database schema, you have three options:
+1. You may update the database via `../orchestra/vendor/bin/doctrine orm:schema-tool:update --force` from your plugin root directory. This is not recommended.
+2. You can work with migrations. First, you need to create a migrations-configuration.yml in you plugin root directory, then run the migrations with the --configuration==migrations-configuration.yml option.
+3. Provide install / update routines in your plugin and run SQL from there.
+
 
 == Frequently Asked Questions ==
 
@@ -58,11 +78,18 @@ I recommend following the [Symfony2 Coding Standards](http://symfony.com/doc/2.0
 
 == Changelog ==
 
+= 1.0 =
+* More documentation
+* Multisite support
+
 = 0.9 =
 Initial release
 
 
 == Upgrade Notice ==
+
+= 1.0 =
+No changes needed
 
 = 0.9 =
 Initial release
