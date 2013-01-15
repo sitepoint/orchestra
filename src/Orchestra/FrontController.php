@@ -50,16 +50,11 @@ class FrontController
         unset($attributes['page']);
 
         $resolver = new ControllerResolver();
-
-        try {
-            $request->attributes->add($attributes);
-            $controller = $resolver->getController($request);
-            $controller[0]->init($request, $em, $twig, $formFactory);
-            $arguments = $resolver->getArguments($request, $controller);
-            $this->response = call_user_func_array($controller, $arguments);
-        } catch (\Exception $e) {
-            wp_die(__('Internal server error: '.$e->getMessage()));
-        }
+        $request->attributes->add($attributes);
+        $controller = $resolver->getController($request);
+        $controller[0]->init($request, $em, $twig, $formFactory);
+        $arguments = $resolver->getArguments($request, $controller);
+        $this->response = call_user_func_array($controller, $arguments);
     }
 
     /**
