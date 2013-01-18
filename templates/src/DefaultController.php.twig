@@ -30,7 +30,7 @@ class DefaultController extends Controller
                 $this->em->persist($person);
                 $this->em->flush();
                 $this->session->getFlashBag()->add('notice', 'Person created!');
-                $this->redirect($this->generatePluginUrl('index'));
+                $this->redirect($this->getUrlFor('index'));
             }
         }
 
@@ -52,7 +52,7 @@ class DefaultController extends Controller
                 $this->em->persist($person);
                 $this->em->flush();
                 $this->session->getFlashBag()->add('notice', 'Person edited!');
-                $this->redirect($this->generatePluginUrl('index'));
+                $this->redirect($this->getUrlFor('index'));
             }
         }
 
@@ -68,6 +68,6 @@ class DefaultController extends Controller
         $this->em->remove($person);
         $this->em->flush();
         $this->session->getFlashBag()->add('notice', 'Person deleted!');
-        $this->redirect($this->generatePluginUrl('index'));
+        $this->redirect($this->getUrlFor('index'));
     }
 }

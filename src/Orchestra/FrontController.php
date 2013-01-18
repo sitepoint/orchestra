@@ -34,6 +34,8 @@ class FrontController
 
     /**
      * Determines which controller to call based on the current request
+     * Sets the controller based on "page" (Wordpress' way of figuring out which plugin is called),
+     * "orchestraController" and "orchestraAction"
      *
      * @param $request
      * @param $em
@@ -44,9 +46,9 @@ class FrontController
     {
         $attributes = $request->query->all();
         $attributes['_controller'] =
-            Framework::$pluginNamespace.'\\Controller\\'.ucfirst($request->query->get('controller', 'default')).'Controller::'.$request->query->get('action', 'index').'Action';
-        unset($attributes['controller']);
-        unset($attributes['action']);
+            Framework::$pluginNamespace.'\\Controller\\'.ucfirst($request->query->get('orchestraController', 'default')).'Controller::'.$request->query->get('orchestraAction', 'index').'Action';
+        unset($attributes['orchestraController']);
+        unset($attributes['orchestraAction']);
         unset($attributes['page']);
 
         $resolver = new ControllerResolver();

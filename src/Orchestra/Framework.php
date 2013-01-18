@@ -174,4 +174,9 @@ class Framework
     {
         return self::$frontController->getResponse();
     }
+
+    public static function displayError($exception)
+    {
+        wp_die('<p><strong>Error!</strong></p><p>'.$exception->getFile().':'.$exception->getLine().'</p><p>'.$exception->getMessage().'</p><pre>'.$exception->getTraceAsString().'</pre>');
+    }
 }

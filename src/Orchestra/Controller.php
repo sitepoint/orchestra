@@ -179,48 +179,81 @@ class Controller
 
     /**
      * Generates an URL based on the current URL.
-     * This is to be used if you want to link to a plugin/controller/action page.
      *
-     * Example:
-     * $this->generatePluginUrl(array(
-     *     'page' => 'PageName',
-     *     'controller' => 'ControllerName',
-     *     'action' => 'actionName'
-     * ));
-     * $this->generatePluginUrl('action', array('other' => 'param');
-     *
-     * @see Controller::generateUrl()
+     * @see Controller::getPathFor()
      * @param array $parameters
      * @return string
      */
-    public function generatePluginUrl($controller = array(), $parameters = array())
+    public function getUrlFor($routingData = array(), $parameters = array())
     {
-        if (is_string($controller)) {
-            $parameters['action'] = $controller;
+        return $this->request->getScheme().'://'.$this->request->getHost().$this->getPathFor($routingData, $parameters);
+    }
+
+    /**
+     * Generates a path based on the current URL.
+     * This is to be used if you want to link to a plugin/controller/action page.
+     *
+     * Example:
+     * $this->getUrlFor(array(
+     *     'controller' => 'ControllerName',
+     *     'action' => 'actionName'
+     * ));
+     * $this->getUrlFor('actionName', array('other' => 'param');
+     *
+     * @see Controller::generatePath()
+     * @param array $parameters
+     * @return string
+     */
+    public function getPathFor($routingData = array(), $parameters = array())
+    {
+        if (is_string($routingData)) {
+            $parameters['orchestraAction'] = $routingData;
         } else {
-            foreach ($controller as $key => $value) {
+            foreach ($routingData as $key => $value) {
+                // Append orchestra to controller and action
+                if ($key == 'controller' || $key == 'action') {
+                    $key = 'orchestra'.ucfirst($key);
+                }
                 $parameters[$key] = $value;
             }
         }
 
-        return self::generateUrl($this->request, $parameters);
+        return self::generatePath($this->request, $parameters);
     }
 
     /**
      * Generates an URL based on the current URL and given $parameters
      *
+     * @see Controller::generatePath()
+     * @param $request
+     * @param array $parameters
+     * @param boolean $ajax
+     * @return string
+     */
+    public static function generateUrl($request, $parameters = array(), $ajax = false)
+    {
+        return $request->getScheme().'://'.$request->getHost().self::generatePath($request, $parameters, $ajax);
+    }
+
+    /**
+     * Generates a path based on the current URL and given $parameters
+     *
      * @param $request
      * @param array $parameters
      * @return string
      */
-    public static function generateUrl($request, $parameters = array())
+    public static function generatePath($request, $parameters = array(), $ajax = false)
     {
-        $url = $request->getScheme().'://'.$request->getHost().$request->getBaseUrl();
-
         if (!isset($parameters['page'])) {
             $parameters['page'] = $request->query->get('page');
         }
 
-        return $url.'?'.http_build_query($parameters);
+        if ($ajax) {
+            $baseUrl = '/wp-admin/admin-ajax.php';
+        } else {
+            $baseUrl = '/wp-admin/admin.php'; //$request->getBaseUrl()
+        }
+
+        return $baseUrl.'?'.http_build_query($parameters);
     }
 }

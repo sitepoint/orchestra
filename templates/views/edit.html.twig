@@ -1,7 +1,7 @@
 <div class="wrap">
     <h3>Edit person</h3>
 
-    <form action="{{ pluginUrl('Default:edit', { 'id': id }) }}" method="POST" {{ form_enctype(form) }}>
+    <form action="{{ url('Default:edit', { 'id': id }) }}" method="POST" {{ form_enctype(form) }}>
 
         {{ form_widget(form) }}
 

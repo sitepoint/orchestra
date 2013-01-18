@@ -51,7 +51,10 @@ class PluginBaseExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'pluginUrl' => new \Twig_Function_Method($this, 'functionPluginUrl'),
+            'url' => new \Twig_Function_Method($this, 'functionUrl'),
+            'path' => new \Twig_Function_Method($this, 'functionPath'),
+            'ajax_url' => new \Twig_Function_Method($this, 'functionAjaxUrl'),
+            'ajax_path' => new \Twig_Function_Method($this, 'functionAjaxPath'),
         );
     }
 
@@ -66,32 +69,58 @@ class PluginBaseExtension extends \Twig_Extension
     }
 
     /**
+     * Create AJAX URL based on passed $controller and $arguments
+     * @see functionUrl
+     */
+    public function functionAjaxUrl($controllerAction, $arguments = array())
+    {
+        return $this->functionUrl($controllerAction, $arguments, true);
+    }
+
+    /**
      * Create URL based on passed $controller and $arguments
-     * $controller has to be either of form "Plugin::Controller::action" or "Controller::action"
+     *
+     * @see functionPath
+     */
+    public function functionUrl($controllerAction, $arguments = array(), $ajax = false)
+    {
+        return $this->request->getScheme().'://'.$this->request->getHost().$this->functionPath($controllerAction, $arguments, $ajax);
+    }
+
+    /**
+     * Create AJAX path based on passed $controller and $arguments
+     *
+     * @see functionPath
+     */
+    public function functionAjaxPath($controllerAction, $arguments = array())
+    {
+        return $this->functionPath($controllerAction, $arguments, true);
+    }
+
+    /**
+     * Create path based on passed $controller and $arguments
+     * $controllerAction has to be of form "Controller::action"
      * $arguments can be any array which will be converted into a query string
      *
-     * Example: {{ pluginUrl('MyPlugin::Default::index') }}
+     * Example: {{ url('Default:index') }}
      *
-     * @param $controller
+     * @param $controllerAction
      * @param array $arguments
+     * @param boolean $ajax
      * @return string
      */
-    public function functionPluginUrl($controller, $arguments = array())
+    public function functionPath($controllerAction, $arguments = array(), $ajax = false)
     {
-        $controllerParts = explode(':', $controller, 3);
+        $controllerParts = explode(':', $controllerAction, 3);
 
         if (count($controllerParts) < 2) {
-            throw new \InvalidArgumentException('Invalid call of pluginUrl(). You need to specify at least controller and action');
-        } elseif (count($controllerParts) == 2) {
-            $arguments['action'] = $controllerParts[1];
-            $arguments['controller'] = $controllerParts[0];
-            $arguments['page'] = $this->request->query->get('page');
+            throw new \InvalidArgumentException('Invalid call of functionPath/functionUrl(). You need to specify controller and action');
         } else {
-            $arguments['action'] = $controllerParts[2];
-            $arguments['controller'] = $controllerParts[1];
-            $arguments['page'] = $controllerParts[0];
+            $arguments['orchestraAction'] = $controllerParts[1];
+            $arguments['orchestraController'] = $controllerParts[0];
+            $arguments['page'] = $this->request->query->get('page');
         }
 
-        return Controller::generateUrl($this->request, $arguments);
+        return Controller::generatePath($this->request, $arguments, $ajax);
     }
 }
