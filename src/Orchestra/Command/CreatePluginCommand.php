@@ -48,7 +48,9 @@ class CreatePluginCommand extends Command
         try {
             $fs->mkdir(array(
                 $pluginIdentifier,
-                $pluginIdentifier.'/views',
+                $pluginIdentifier.'/resources',
+                $pluginIdentifier.'/resources/views',
+                $pluginIdentifier.'/resources/public',
                 $pluginIdentifier.'/data',
                 $pluginIdentifier.'/data/cache',
                 $pluginIdentifier.'/data/proxies',
@@ -66,10 +68,6 @@ class CreatePluginCommand extends Command
         // generate files
         $loader = new \Twig_Loader_Filesystem($templatesDirectory);
         $twig = new \Twig_Environment($loader);
-
-        file_put_contents($pluginIdentifier.'/cli-config.php', $twig->render('cli-config.php.twig', array(
-            'pluginNamespace' => $pluginNamespace,
-        )));
 
         file_put_contents($pluginIdentifier.'/doctrine-config.php', $twig->render('doctrine-config.php.twig', array(
             'pluginIdentifier' => $pluginIdentifier,
@@ -96,13 +94,11 @@ class CreatePluginCommand extends Command
         )));
 
         // copy files
-        $fs->copy($templatesDirectory.'/views/index.html.twig', $pluginIdentifier.'/views/Default/index.html.twig');
-        $fs->copy($templatesDirectory.'/views/create.html.twig', $pluginIdentifier.'/views/Default/create.html.twig');
-        $fs->copy($templatesDirectory.'/views/edit.html.twig', $pluginIdentifier.'/views/Default/edit.html.twig');
+        $fs->copy($templatesDirectory.'/resources/views/index.html.twig', $pluginIdentifier.'/resources/views/Default/index.html.twig');
+        $fs->copy($templatesDirectory.'/resources/views/create.html.twig', $pluginIdentifier.'/resources/views/Default/create.html.twig');
+        $fs->copy($templatesDirectory.'/resources/views/edit.html.twig', $pluginIdentifier.'/resources/views/Default/edit.html.twig');
 
         $output->writeln('Created "'.$pluginName.'" plugin in "'.$pluginIdentifier.'"');
-        $output->writeln('To finish, you need to take these steps too:');
-        $output->writeln('1. Activate your plugin in "Plugins"');
-        $output->writeln('2. Execute "cd '.$pluginIdentifier.' && ../orchestra/vendor/bin/doctrine orm:schema-tool:update --force"');
+        $output->writeln('To finish, you need to activate your plugin in "Plugins"');
     }
 }
