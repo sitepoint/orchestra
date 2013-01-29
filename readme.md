@@ -1,6 +1,6 @@
 General information
 ===================
-* Contributors: michaelsauter
+* Contributors: [michaelsauter](https://github.com/michaelsauter)
 * Tags: symfony2, mvc, options, form
 * Requires at least: 3.4
 * Tested up to: 3.4.2
@@ -8,14 +8,13 @@ General information
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Orchestra is a solid plugin development base formed of Symfony2 components.
+Orchestra is a solid plugin development base formed of Symfony2 components. It was originally created during a TripleTime project at [SitePoint](http://www.sitepoint.com)
 
 
 Description
 ===========
 
-Orchestra integrates Doctrine2 and some Symfony2 components into Wordpress to allow developers to easily build
-admin pages that exceed the built-in Wordpress functionality.
+Orchestra integrates Doctrine2 and some Symfony2 components into Wordpress to allow developers to easily build admin pages that exceed the built-in Wordpress functionality.
 
 The basic architecture is as follows:
 * Orchestra mainly has 3 building blocks (components): Doctrine (ORM), Form, Twig. These can form a foundation for the development of arbitary plugins.
