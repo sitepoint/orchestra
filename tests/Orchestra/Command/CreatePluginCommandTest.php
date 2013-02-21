@@ -23,7 +23,7 @@ class CreatePluginCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($fs->exists($testPluginDirectory));
 
         $fileContent = file_get_contents($testPluginDirectory.'/doctrine-config.php');
-        $this->assertContains('$entityPaths = array(\'../test-plugin/src/TestPlugin/Entity\');', $fileContent);
+        $this->assertContains('src/TestPlugin/Entity', $fileContent);
 
         // cleanup
         $fs->remove($testPluginDirectory);
