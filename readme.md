@@ -46,7 +46,7 @@ General Usage
 Interacting With the Database
 =============================
 Orchestra interacts with the database via Doctrine2. It also supports multisite setup out-of-the-box. When creating entities, you should specify the table name explicitly, but leave out the prefix as this is determined by Orchestra.
-To create or modify the database schema, you need to provide install / update routines in your plugin and run SQL from there. Unfortunately, the Doctrine CLI tools are not supported at the moment. That being said, it is often more comfortable to handle schema changes upon install/update anyway.
+To create or modify the database schema, you need to provide install / update routines in your plugin and run SQL from there. Unfortunately, the Doctrine CLI tools are not supported. That being said, it is often more comfortable to handle schema changes upon install/update anyway.
 
 
 Frequently Asked Questions
