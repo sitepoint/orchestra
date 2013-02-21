@@ -1,12 +1,9 @@
 General information
 ===================
-* Contributors: [michaelsauter](https://github.com/michaelsauter)
-* Tags: symfony2, mvc, options, form
-* Requires at least: 3.4
-* Tested up to: 3.4.2
-* Stable tag: 1.0
-* License: GPLv2 or later
-* License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* Author: [michaelsauter](https://github.com/michaelsauter)
+* Required WP version: 3.4
+* Tested up to WP version: 3.5.1
+* License: MIT (http://opensource.org/licenses/MIT)
 
 Orchestra is a solid plugin development base formed of Symfony2 components. It was originally created during a TripleTime project at [SitePoint](http://www.sitepoint.com)
 
@@ -49,6 +46,11 @@ Orchestra interacts with the database via Doctrine2. It also supports multisite 
 To create or modify the database schema, you need to provide install / update routines in your plugin and run SQL from there. Unfortunately, the Doctrine CLI tools are not supported. That being said, it is often more comfortable to handle schema changes upon install/update anyway.
 
 
+Writing Tests
+=============
+You can write unit tests just like for every other PHP project. Orchestra uses PHPUnit to test its code. If you want to test your plugin with PHPUnit, take a look inside `tests/` to get started.
+
+
 Frequently Asked Questions
 ==========================
 
@@ -65,6 +67,13 @@ I recommend following the [Symfony2 Coding Standards](http://symfony.com/doc/2.0
 
 Changelog
 =========
+
+1.1
+---
+* Removed Doctrine Migrations
+* Removed `vendor/` from repository
+* Fixed unit tests
+* Updated readme
 
 1.0
 ---
