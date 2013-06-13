@@ -8,45 +8,38 @@ Author: Your Name
 
 namespace {{ pluginNamespace }};
 
-const {{ pluginNamespace|upper }}_VERSION = '0.1';
-
-class {{ pluginNamespace }}
+class Plugin extends \Orchestra\Plugin
 {
-    public function __construct()
+    static public function install()
     {
-        if (!file_exists(__DIR__.'/data/cache') || !file_exists(__DIR__.'/data/proxies') || !is_writable(__DIR__.'/data/cache') || !is_writable(__DIR__.'/data/proxies')) {
-            wp_die('You need to ensure both "{{ pluginNamespace|lower }}/data/cache" and "{{ pluginNamespace|lower }}/data/proxies" exist and are writable by Apache\'s user.');
-        }
-        if (class_exists('\Orchestra\Framework')) {
-            try {
-                $identifier = \Orchestra\Framework::setupPlugin(__NAMESPACE__, __DIR__);
-            } catch (\Exception $exception) {
-                \Orchestra\Framework::displayError($exception);
-            }
-            add_menu_page('{{ pluginName }} Options', '{{ pluginName }}', 'manage_options', $identifier, array($this, 'output'));
-        }
+      parent::install();
+
+      global $wpdb;
+
+      $wpdb->query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."{{ pluginNamespace|lower }}_persons` (`id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
     }
 
-    public function output()
+    static public function update()
     {
-        if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have sufficient permissions to access this page.'));
-        }
-        echo \Orchestra\Framework::getResponse();
+      parent::update(
+        array(
+          2 => function(){
+            // Update routine for version 2
+          },
+          3 => function(){
+            // Update routine for version 3
+          }
+        )
+      );
     }
 }
 
 add_action('admin_menu', function() {
-    new {{ pluginNamespace }}();
+    new Plugin(__NAMESPACE__, __DIR__, '{{ pluginName }}', 1);
 });
 
 // AJAX
-add_action('wp_ajax_{{ pluginNamespace|lower }}', '\{{ pluginNamespace }}\ajaxCallback');
-function ajaxCallback() {
-    \Orchestra\Framework::setupPlugin(__NAMESPACE__, __DIR__);
-    echo \Orchestra\Framework::getResponse();
-    die();
-}
+add_action('wp_ajax_{{ pluginNamespace|lower }}', '\{{ pluginNamespace }}\Plugin::ajaxCallback');
 
 // Check that Orchestra is active on activation
 register_activation_hook(__FILE__, function(){
@@ -55,32 +48,6 @@ register_activation_hook(__FILE__, function(){
     }
 });
 
-// install
-function install()
-{
-    global $wpdb;
-    add_option('{{ pluginNamespace|lower }}-version_'.$wpdb->prefix, {{ pluginNamespace|upper }}_VERSION);
-
-    $wpdb->query("CREATE TABLE IF NOT EXISTS `".$wpdb->prefix."{{ pluginNamespace|lower }}_persons` (`id` int(11) NOT NULL AUTO_INCREMENT, `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL, PRIMARY KEY (`id`) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci");
-}
-register_activation_hook(__FILE__, '\{{ pluginNamespace }}\install');
-
-
-// update
-function update()
-{
-    global $wpdb;
-
-    $dbVersion = get_option('{{ pluginNamespace|lower }}-version_'.$wpdb->prefix);
-
-    if ($dbVersion != {{ pluginNamespace|upper }}_VERSION) {
-
-        // Update from X to Y
-        if ($dbVersion == 'X') {
-
-        }
-
-        update_option('{{ pluginNamespace|lower }}-version_'.$wpdb->prefix, {{ pluginNamespace|upper }}_VERSION);
-    }
-}
-add_action('plugins_loaded', '\{{ pluginNamespace }}\update');
+// Install & Update
+register_activation_hook(__FILE__, '\{{ pluginNamespace }}\Plugin::install');
+add_action('plugins_loaded', '\{{ pluginNamespace }}\Plugin::update');

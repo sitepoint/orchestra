@@ -1,17 +1,19 @@
 {
+    "config": {
+        "vendor-dir": "../../vendors/orchestra"
+    },
     "require": {
         "twig/twig": "1.*",
         "doctrine/orm": "2.3.*",
-        "doctrine/migrations": "dev-master",
-        "symfony/form": "2.1.*",
-        "symfony/validator": "2.1.*",
-        "symfony/yaml": "2.1.*",
-        "symfony/config": "2.1.*",
-        "symfony/translation": "2.1.*",
-        "symfony/twig-bridge": "2.1.*",
-        "symfony/http-foundation": "2.1.*",
-        "symfony/http-kernel": "2.1.*",
-        "symfony/class-loader": "2.1.*",
-        "symfony/filesystem": "2.1.*"
+        "symfony/form": "2.3.*",
+        "symfony/validator": "2.3.*",
+        "symfony/yaml": "2.3.*",
+        "symfony/config": "2.3.*",
+        "symfony/translation": "2.3.*",
+        "symfony/twig-bridge": "2.3.*",
+        "symfony/http-foundation": "2.3.*",
+        "symfony/http-kernel": "2.3.*",
+        "symfony/class-loader": "2.3.*",
+        "symfony/filesystem": "2.3.*"
     }
 }

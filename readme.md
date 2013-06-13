@@ -2,11 +2,9 @@ General information
 ===================
 * Contributors: [michaelsauter](https://github.com/michaelsauter)
 * Tags: symfony2, mvc, options, form
-* Requires at least: 3.4
-* Tested up to: 3.4.2
-* Stable tag: 1.0
-* License: GPLv2 or later
-* License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* Requires at least: 3.5
+* Stable tag: 1.1
+* License: MIT
 
 Orchestra is a solid plugin development base formed of Symfony2 components. It was originally created during a TripleTime project at [SitePoint](http://www.sitepoint.com)
 
@@ -29,7 +27,7 @@ Installation
 ============
 
 1. Put `orchestra` into the `/wp-content/plugins/` directory
-2. Inside `orchestra`, run `curl -s https://getcomposer.org/installer | php` and then `php composer.phar install`
+2. Run `composer install` (requires composer to be installed globally)
 3. (Optionally) edit `config.php` to match your setup
 4. Activate the plugin through the 'Plugins' menu in WordPress
 
@@ -37,8 +35,8 @@ Installation
 General Usage
 =============
 
-1. Go to `wp-content/plugins`
-2. Execute `orchestra/console plugin:create your-plugin-name-here`
+1. Go to `wp-content/plugins/orchestra`
+2. Execute `./console plugin:create your-plugin-name-here`
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. While you're developing, make sure to set `WP_DEBUG` in `wp-config.php` to `true` in order to have the caches rewritten automatically
 
@@ -46,7 +44,17 @@ General Usage
 Interacting With the Database
 =============================
 Orchestra interacts with the database via Doctrine2. It also supports multisite setup out-of-the-box. When creating entities, you should specify the table name explicitly, but leave out the prefix as this is determined by Orchestra.
-To create or modify the database schema, you need to provide install / update routines in your plugin and run SQL from there. Unfortunately, the Doctrine CLI tools are not supported at the moment. That being said, it is often more comfortable to handle schema changes upon install/update anyway.
+To create or modify the database schema, you need to provide install / update routines in your plugin and run SQL from there. Unfortunately, the Doctrine CLI tools are not supported. That being said, it is often more comfortable to handle schema changes upon install/update anyway.
+
+
+Writing Tests
+=============
+You can write unit tests just like for every other PHP project. Orchestra uses PHPUnit to test its code. If you want to test your plugin with PHPUnit, take a look inside `tests/` to get started.
+
+
+Deployment
+==========
+The repository intentionally does not contain the vendors. The vendor directory is configured by default to be `wp-content/vendors/orchestra`. Exclude this folder from version control if you want to install the dependencies via composer upon install. If you want to manage the dependencies locally however, commit the folder to your repository.
 
 
 Frequently Asked Questions
@@ -65,6 +73,12 @@ I recommend following the [Symfony2 Coding Standards](http://symfony.com/doc/2.0
 
 Changelog
 =========
+
+1.1
+---
+* Removed Doctrine Migrations
+* Fixed unit tests
+* Updated readme
 
 1.0
 ---
