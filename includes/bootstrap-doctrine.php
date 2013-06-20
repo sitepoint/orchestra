@@ -31,7 +31,7 @@ if (!isset($orchestraConfig)) {
 
 // Create an annotation configuration, using the configured environment
 // Tell Doctrine how to autoload the Assert annotations
-AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", __DIR__.'/../'.$orchestraConfig['vendorDir'].'/symfony/validator');
+AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", $orchestraConfig['vendorDir'].'/symfony/validator');
 $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($entityPaths, ($orchestraConfig['env'] == 'dev'), $proxyDir, null, false);
 $config->setAutoGenerateProxyClasses(true);
 

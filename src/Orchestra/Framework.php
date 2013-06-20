@@ -120,23 +120,21 @@ class Framework
             }
 
             self::$pluginNamespace = $pluginNamespace;
-            $baseDir = __DIR__.'/../..';
-            $vendorDir = $baseDir.'/'.$orchestraConfig['vendorDir'];
 
             // Boot Doctrine and use the configuration of the active plugin
             if (!class_exists("Doctrine\Common\Version", false)) {
                 include_once($pluginDirectory.'/doctrine-config.php');
-                include_once($baseDir.'/includes/bootstrap-doctrine.php');
+                include_once(__DIR__.'/../../includes/bootstrap-doctrine.php');
             }
 
             // Setup Twig
             $translator = new Translator($orchestraConfig['language']);
             $translator->addLoader('xlf', new XliffFileLoader());
-            $translator->addResource('xlf', realpath($vendorDir.'/symfony/form/Symfony/Component/Form/Resources/translations/validators.'.$orchestraConfig['language'].'.xlf'), $orchestraConfig['language'], 'validators');
-            $translator->addResource('xlf', realpath($vendorDir.'/symfony/validator/Symfony/Component/Validator/Resources/translations/validators.'.$orchestraConfig['language'].'.xlf'), $orchestraConfig['language'], 'validators');
+            $translator->addResource('xlf', $orchestraConfig['vendorDir'].'/symfony/form/Symfony/Component/Form/Resources/translations/validators.'.$orchestraConfig['language'].'.xlf', $orchestraConfig['language'], 'validators');
+            $translator->addResource('xlf', $orchestraConfig['vendorDir'].'/symfony/validator/Symfony/Component/Validator/Resources/translations/validators.'.$orchestraConfig['language'].'.xlf', $orchestraConfig['language'], 'validators');
             $loader = new \Twig_Loader_Filesystem(array(
                 realpath($pluginDirectory.$directories['views']),
-                realpath($vendorDir.'/symfony/twig-bridge/Symfony/Bridge/Twig/Resources/views/Form'),
+                $orchestraConfig['vendorDir'].'/symfony/twig-bridge/Symfony/Bridge/Twig/Resources/views/Form',
             ));
             $twigFormEngine = new TwigRendererEngine(array('form_div_layout.html.twig'));
             $twigEnvironmentOptions = array();
