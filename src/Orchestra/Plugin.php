@@ -48,13 +48,15 @@ class Plugin
         } catch (\Exception $exception) {
           Framework::displayError($exception);
         }
-        add_menu_page($name, $name, 'manage_options', $identifier, array($this, 'output'));
+        $pageHookSuffix = add_menu_page($name, $name, 'manage_options', $identifier, array($this, 'output'));
 
         // Initialiye the public variables
         self::$namespace = $namespace;
         self::$directory = $directory;
         self::$key = $identifier;
         self::$version = $version;
+
+        add_action('admin_print_scripts-' . $pageHookSuffix, array($this, 'enqeueAssets'));
     }
 
     /**
@@ -130,5 +132,15 @@ class Plugin
     {
         global $wpdb;
         return self::$key.'_version_'.$wpdb->prefix;
+    }
+
+    /**
+     * Hook to enqeue styles and scripts.
+     * The hook is registered in the constructor.
+     * See http://codex.wordpress.org/Function_Reference/wp_enqueue_script#Link_Scripts_Only_on_a_Plugin_Administration_Screen
+     */
+    public function enqeueAssets()
+    {
+
     }
 }
