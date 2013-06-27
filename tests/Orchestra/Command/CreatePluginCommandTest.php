@@ -36,13 +36,15 @@ class CreatePluginCommandTest extends \PHPUnit_Framework_TestCase
         $application = new Application();
         $application->add(new CreatePluginCommand());
         $fs = new Filesystem();
+        chdir(ABSPATH.'wp-content/plugins/orchestra');
         $command = $application->find('plugin:create');
         $commandTester = new CommandTester($command);
 
         $testPluginIdentifier = 'test-plugin';
         $commandTester->execute(array('command' => $command->getName(), 'pluginIdentifier' => $testPluginIdentifier));
 
-        $testPluginDirectory = __DIR__.'/../../../../'.$testPluginIdentifier;
+        $testPluginDirectory = ABSPATH.'wp-content/plugins/'.$testPluginIdentifier;
+
         $this->assertTrue($fs->exists($testPluginDirectory));
 
         $fileContent = file_get_contents($testPluginDirectory.'/doctrine-config.php');
