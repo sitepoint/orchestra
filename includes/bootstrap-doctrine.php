@@ -32,7 +32,8 @@ if (!isset($orchestraConfig)) {
 // Create an annotation configuration, using the configured environment
 // Tell Doctrine how to autoload the Assert annotations
 AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", $orchestraConfig['vendorDir'].'/symfony/validator');
-$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($entityPaths, ($orchestraConfig['env'] == 'dev'), $proxyDir, null, false);
+// If multisite is set to true, we need to reload the cache even in production
+$config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($entityPaths, ($orchestraConfig['multisite'] ? true : ($orchestraConfig['env'] == 'dev')), $proxyDir, null, false);
 $config->setAutoGenerateProxyClasses(true);
 
 // Table Prefix
