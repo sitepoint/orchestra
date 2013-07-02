@@ -33,6 +33,6 @@ $orchestraConfig = array(
     'csrfSecret' => (defined('AUTH_SALT') ? AUTH_SALT : 'auth_salt'),
     'env' => ((defined('WP_DEBUG') ? WP_DEBUG : false) ? 'dev' : 'prod'),
     'language' => 'en', // only "en" is supported right now
-    'multisite' => false,
+    'multisite' => (defined('WP_ALLOW_MULTISITE') ? WP_ALLOW_MULTISITE : false),
     'vendorDir' => ABSPATH.'wp-content/vendors/orchestra'
 );
