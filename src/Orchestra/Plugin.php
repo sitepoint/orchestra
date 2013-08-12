@@ -50,7 +50,7 @@ class Plugin
         }
         $pageHookSuffix = add_menu_page($name, $name, 'manage_options', $identifier, array($this, 'output'));
 
-        // Initialiye the public variables
+        // Initialize the public variables
         self::$namespace = $namespace;
         self::$directory = $directory;
         self::$key = $identifier;
