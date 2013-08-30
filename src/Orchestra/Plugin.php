@@ -30,13 +30,16 @@ namespace Orchestra;
 class Plugin
 {
 
+    private $requiredCapability;
     static public $namespace;
     static public $directory;
     static public $version;
     static public $key;
 
-    public function __construct($namespace, $directory, $name, $version)
+    public function __construct($namespace, $directory, $name, $version, $requiredCapability = 'manage_options')
     {
+        $this->requiredCapability = $requiredCapability;
+
         // Check the data directories exist and are writeable
         if (!file_exists($directory.'/data/cache') || !file_exists($directory.'/data/proxies') || !is_writable($directory.'/data/cache') || !is_writable($directory.'/data/proxies')) {
             wp_die('You need to ensure both "'.$directory.'/data/cache" and "'.$directory.'/data/proxies" exist and are writable by Apache\'s user.');
@@ -48,7 +51,7 @@ class Plugin
         } catch (\Exception $exception) {
           Framework::displayError($exception);
         }
-        $pageHookSuffix = add_menu_page($name, $name, 'manage_options', $identifier, array($this, 'output'));
+        $pageHookSuffix = add_menu_page($name, $name, $requiredCapability, $identifier, array($this, 'output'));
 
         // Initialize the public variables
         self::$namespace = $namespace;
@@ -64,7 +67,7 @@ class Plugin
      */
     public function output()
     {
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can($this->requiredCapability)) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
         echo Framework::getResponse();
