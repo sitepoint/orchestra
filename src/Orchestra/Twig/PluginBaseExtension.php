@@ -90,7 +90,10 @@ class PluginBaseExtension extends \Twig_Extension
      */
     public function functionUrl($controllerAction, $arguments = array(), $ajax = false)
     {
-        return $this->request->getScheme().'://'.$this->request->getHost().$this->functionPath($controllerAction, $arguments, $ajax);
+        $port = $this->request->getPort();
+        $portStr = ($port != '80') ? ':'.$port : '';
+
+        return $this->request->getScheme().'://'.$this->request->getHost().$portStr.$this->functionPath($controllerAction, $arguments, $ajax);
     }
 
     /**

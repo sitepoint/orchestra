@@ -192,7 +192,11 @@ class Controller
      */
     public function getUrlFor($routingData = array(), $parameters = array())
     {
-        return $this->request->getScheme().'://'.$this->request->getHost().$this->getPathFor($routingData, $parameters);
+
+        $port = $this->request->getPort();
+        $portStr = ($port != '80') ? ':'.$port : '';
+
+        return $this->request->getScheme().'://'.$this->request->getHost().$portStr.$this->getPathFor($routingData, $parameters);
     }
 
     /**
