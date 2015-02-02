@@ -8,6 +8,11 @@ Author: Your Name
 
 namespace {{ pluginNamespace }};
 
+if(!class_exists('\Orchestra\Plugin')){
+    $loader = require (dirname(dirname(dirname(__FILE__))).'/vendors/orchestra/autoload.php');
+    $loader->add('Orchestra\\', dirname(dirname(__FILE__)).'/orchestra/src/');
+}
+
 class Plugin extends \Orchestra\Plugin
 {
     static public function install()
