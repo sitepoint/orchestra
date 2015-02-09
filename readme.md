@@ -77,6 +77,13 @@ I recommend following the [Symfony2 Coding Standards](http://symfony.com/doc/2.0
 Changelog
 =========
 
+1.2
+---
+* Improve path locations
+* Cache metadata on non-multisite setups
+* Allow required capability to be customzized
+* Update plugin template to load Orchestra if not loaded yet
+
 1.1
 ---
 * Removed Doctrine Migrations
