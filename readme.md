@@ -37,7 +37,7 @@ The constructor of `Orchestra\Plugin` uses `Orchestra\Framework` to setup the pl
 Installation
 ============
 
-1. Put `orchestra` into the `/wp-content/plugins/` directory
+1. Put `orchestra` into the `wp-content/plugins/` directory
 2. Run `composer install` (requires composer to be installed globally)
 3. (Optionally) edit `config.php` to match your setup
 4. Activate the plugin through the 'Plugins' menu in WordPress
