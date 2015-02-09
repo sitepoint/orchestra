@@ -12,7 +12,7 @@ Orchestra is a foundation (mainly formed of Symfony2 components) to build WordPr
 Description
 ===========
 
-Orchestra integrates Doctrine2 and some Symfony2 components (such as Form and Twig) into WordPress. Orchestra wires those components together and provides a few additional building blocks so that admin plugin development is possible in a similar style to Symfony2 framework development.
+Orchestra integrates Doctrine2 and some Symfony2 components (such as Form and Twig) into WordPress. Orchestra wires those components together and provides a few additional building blocks so that admin plugin development is possible in a similar style to Symfony2 framework development. The public part of the plugin (if any) should be developed using standard WordPress functionality.
 
 The dependencies of Orchestra are specified in the `composer.json` file and are installed into a vendor directory, which is `wp-content/vendors/orchestra` by default. The bootstrap process loads the configuration, `config.php`, which mainly uses the configuration from `wp-config.php`. It also initializes a class loader to take care of loading the dependencies and Orchestra's classes.
 This code is executed during the plugin initialization of WordPress, but it does not do anything by itself, but rather is used by plugins based of Orchestra.
