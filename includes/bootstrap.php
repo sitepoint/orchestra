@@ -56,6 +56,12 @@ $orchestraClassLoader->registerNamespaces(array(
     'SessionHandlerInterface' => $orchestraConfig['vendorDir'].'/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs',
     'Doctrine\\ORM' => $orchestraConfig['vendorDir'].'/doctrine/orm/lib/',
     'Doctrine\\DBAL' => $orchestraConfig['vendorDir'].'/doctrine/dbal/lib/',
+    'Doctrine\\Instantiator' => $orchestraConfig['vendorDir'].'/doctrine/instantiator/src',
+    'Doctrine\\Common\\Annotations' => $orchestraConfig['vendorDir'].'/doctrine/annotations/lib',
+    'Doctrine\\Common\\Cache' => $orchestraConfig['vendorDir'].'/doctrine/cache/lib',
+    'Doctrine\\Common\\Collections' => $orchestraConfig['vendorDir'].'/doctrine/collections/lib',
+    'Doctrine\\Common\\Inflector' => $orchestraConfig['vendorDir'].'/doctrine/inflector/lib',
+    'Doctrine\\Common\\Lexer' => $orchestraConfig['vendorDir'].'/doctrine/lexer/lib',
     'Doctrine\\Common' => $orchestraConfig['vendorDir'].'/doctrine/common/lib/',
     'Orchestra' => __DIR__ . '/../src/',
 ));
