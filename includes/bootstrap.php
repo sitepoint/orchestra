@@ -22,10 +22,11 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-// Load configuration and UniversalClassLoader
-// Introduces $orchestraConfig into the global namespace
+// Load configuration
 include_once __DIR__.'/../config.php';
-include_once $orchestraConfig['vendorDir'].'/symfony/class-loader/Symfony/Component/ClassLoader/UniversalClassLoader.php';
+
+// Introduce $orchestraConfig into the global namespace
+require_once $orchestraConfig['vendorDir'].'/autoload.php';
 
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 
@@ -41,17 +42,14 @@ $orchestraClassLoader->registerNamespaces(array(
     'Symfony\\Component\\Yaml' => $orchestraConfig['vendorDir'].'/symfony/yaml/',
     'Symfony\\Component\\Validator' => $orchestraConfig['vendorDir'].'/symfony/validator/',
     'Symfony\\Component\\Translation' => $orchestraConfig['vendorDir'].'/symfony/translation/',
-    'Symfony\\Component\\OptionsResolver' => $orchestraConfig['vendorDir'].'/symfony/options-resolver/',
     'Symfony\\Component\\Locale' => $orchestraConfig['vendorDir'].'/symfony/locale/',
     'Symfony\\Component\\HttpKernel' => $orchestraConfig['vendorDir'].'/symfony/http-kernel/',
     'Symfony\\Component\\HttpFoundation' => $orchestraConfig['vendorDir'].'/symfony/http-foundation/',
     'Symfony\\Component\\Form' => $orchestraConfig['vendorDir'].'/symfony/form/',
-    'Symfony\\Component\\EventDispatcher' => $orchestraConfig['vendorDir'].'/symfony/event-dispatcher/',
     'Symfony\\Component\\Console' => $orchestraConfig['vendorDir'].'/symfony/console/',
     'Symfony\\Component\\Config' => $orchestraConfig['vendorDir'].'/symfony/config/',
     'Symfony\\Component\\ClassLoader' => $orchestraConfig['vendorDir'].'/symfony/class-loader/',
     'Symfony\\Component\\Filesystem' => $orchestraConfig['vendorDir'].'/symfony/filesystem/',
-    'Symfony\\Component\\PropertyAccess' => $orchestraConfig['vendorDir'].'/symfony/property-access/',
     'Symfony\\Bridge\\Twig' => $orchestraConfig['vendorDir'].'/symfony/twig-bridge/',
     'SessionHandlerInterface' => $orchestraConfig['vendorDir'].'/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs',
     'Doctrine\\ORM' => $orchestraConfig['vendorDir'].'/doctrine/orm/lib/',
